@@ -1,0 +1,25 @@
+.ContactUs{
+    position:relative;
+    width: 100vw;
+    height: 45vw;
+    background-color: rgb(38, 38, 38);
+    top: 4vw;
+    left: -0.4vw;
+}
+
+.ContactUs h1{
+    position: relative;
+    color: white;
+    top: 32vw;
+    left: 0vw;
+    font-weight: 100;
+    line-height: 3vw;
+    text-align: center;
+}
+
+.ContactUs img{
+    position: absolute;
+    left: 50vw;
+    transform: translate(-50%, 0);
+    top: 3vw;
+}

@@ -1,0 +1,4 @@
+1. group.attribute works for everything BESIDES group.owner ... This could be because of it being a related field
+    (fixed using the StringRelatedField in models.py) (done)
+2. When using @api_view, the POST is "Forbidden", because of CSRF since we are posting without authentication
+3. Let people join a group, making sure to increment group.num

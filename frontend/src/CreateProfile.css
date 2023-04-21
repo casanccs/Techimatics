@@ -1,0 +1,20 @@
+.CreateProfile{
+    position: relative;
+    display: grid;
+    width: 1000px;
+    grid-template-columns: 500px 500px;
+    top: 50vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+}
+
+.CreateProfile *{
+    color: white;
+    font-size: 35px;
+}
+
+.CreateProfile input{
+    background-color: rgba(255, 255, 255, 0.39);
+    font-family: 'Gamer';
+    font-weight: lighter;
+}

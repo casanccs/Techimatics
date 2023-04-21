@@ -1,0 +1,30 @@
+.GroupList{
+    margin-top: 200px;
+    color: white;
+}
+
+.GroupList *{
+    font-weight: lighter;
+}
+
+.ListItem{
+
+    position: relative;
+    color: black;
+    background-color: white;
+    font-size: 25px;
+    width: 450px;
+    padding-top: 45px;
+    padding-bottom: 45px;
+    text-align: center;
+}
+
+.grid{
+    display: grid;
+    width: fit-content;
+    grid-template-columns: 450px 450px 450px;
+    gap: 50px;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%);
+}

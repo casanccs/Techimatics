@@ -1,0 +1,12 @@
+@font-face {
+  font-family: "Gamer";
+  src: url("./assets/Gamer.ttf") format("truetype");
+}
+
+.App {
+  font-family: 'Gamer';
+}
+
+html{
+  background-color: black;
+}

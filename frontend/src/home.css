@@ -1,0 +1,362 @@
+.home{
+    color: rgb(0,200,0);
+}
+
+.top{
+    position: relative;
+    top: 5vw;
+    height: 52vw;
+}
+
+.ships{
+    position: absolute;
+    width: 4.5vw;
+    margin: 0vw;
+    padding: 0vw;
+}
+
+#ship1{
+    top: 1vw;
+    left:2vw;
+}
+
+#ship2{
+    top: -1vw;
+    left: 14vw;
+}
+
+#ship3{
+    top: 3.5vw;
+    left: 9vw;
+}
+
+#player{
+    position: absolute;
+    width: 6.5vw;
+    top: 8vw;
+    left: 6vw;
+}
+
+#player2{
+    position:absolute;
+    width: 12vw;
+    top: 0vw;
+    left: 76vw;
+}
+
+#skeleton{
+    position:absolute;
+    width: 10vw;
+    top: 1vw;
+    left: 88vw;
+}
+
+.top #mid{
+    text-align: center;
+    position: absolute;
+    margin: 0vw;
+    padding: 0vw;
+    width: 53vw;
+    top: 0vw;
+    left: 50vw;
+    transform: translate(-50%,0);
+    border-color: rgb(0,200,0);
+    border-width: 0.75vw;
+    border-style: solid;
+}
+
+.top #mid h1{
+    font-size: 3.5vw;
+    margin: 1vw;
+    margin-bottom: 2vw;
+    font-weight: 100;
+}
+
+.top #mid h2{
+    font-size: 1.75vw;
+    font-weight: 100;
+}
+
+.top .images{
+    position: absolute;
+    width: 98vw;
+    top: 16vw;
+}
+
+.aboutMe{
+    position:relative;
+    width: 98vw;
+    height: 33vw;
+}
+.aboutMe .me{
+    position:absolute;
+    width:20vw;
+    top: 3.5vw;
+    left: 10vw;
+}
+
+.aboutMe h3{
+    position:absolute;
+    text-align: center;
+    font-size: 3vw;
+    left: 55vw;
+}
+
+.aboutMe p{
+    position: absolute;
+    text-align: center;
+    font-size: 1.5vw;
+    width: 45vw;
+    top: 6vw;
+    left: 40vw;
+}
+
+.info{
+    position: relative;
+    width: 98vw;
+    height: 48vw;
+    font-weight: 100;
+    font-size: 1.2vw;
+    color: rgb(147, 147, 147);
+    line-height: 1.5vw;
+}
+
+.info .wwtl{
+    position: absolute;
+    width: 30vw;
+    height: 46vw;
+    background-color: rgb(39, 39, 39);
+    left: 3.5vw;
+}
+
+.info .wwtl h1{
+    position:absolute;
+    font-weight: 100;
+    font-size: 2vw;
+    color: white;
+    left: 1vw;
+}
+
+.info .wwtl #top{
+    position:absolute;
+    text-align: center;
+    top:4vw;
+}
+.info .wwtl #mid{
+    position: absolute;
+    font-size: 1.1vw;
+    left: 0.4vw;
+    top: 13vw;
+}
+.info .wwtl ol{
+    position: absolute;
+    font-size: 1.22vw;
+    left: 0.75vw;
+    top: 15vw;
+    line-height: 1.75vw;
+    color: rgb(212, 212, 212)
+}
+.info .wwtl img{
+    width: 30vw;
+    position: absolute;
+    left: 0vw;
+    top: 24vw;
+    height: 23vw;
+}
+
+.info .python{
+    position: absolute;
+    width: 59vw;
+    height: 17vw;
+    background-color: rgb(39, 39, 39);
+    left: 35.5vw;
+    font-size: 0.95vw;
+}
+
+.info .python h1{
+    position: relative;
+    color: white;
+    font-weight: 100;
+    font-size: 1.5vw;
+    left: 1vw;
+}
+
+.info .python p{
+    width: 29vw;
+    position: relative;
+    line-height: 1.2vw;
+    top: -1vw;
+    left: 1vw;
+    color:rgb(147, 147, 147)
+}
+.info .python img{
+    width: 30vw;
+    height: 17vw;
+    position: absolute;
+    left: 29vw;
+    top: 0vw;
+}
+
+.info .pygame{
+    width: 59vw;
+    height: 14vw;
+    position: absolute;
+    left: 35.5vw;
+    top: 18vw;
+    background-color: rgb(39, 39, 39);
+    font-size: 1vw;
+}
+
+.info .pygame h1{
+    position: relative;
+    left: 1vw;
+    color: white;
+    font-weight: 100;
+    font-size: 1.5vw;
+}
+
+.info .pygame p{
+    width: 29vw;
+    font-size: 1.1vw;
+    position: relative;
+    line-height: 1.4vw;
+    top: -0.5vw;
+    left: 1vw;
+    color:rgb(147, 147, 147)
+}
+.info .pygame img{
+    position: absolute;
+    top: 0vw;
+    left: 33vw;
+    width: 20vw;
+    height: 14vw;
+}
+
+
+.info .gimp{
+    width: 59vw;
+    height: 13.75vw;
+    position: absolute;
+    left: 35.5vw;
+    top: 33.2vw;
+    background-color: rgb(39, 39, 39);
+    font-size: 1vw;
+}
+
+.info .gimp h1{
+    position: relative;
+    left: 1vw;
+    color: white;
+    font-weight: 100;
+    font-size: 1.5vw;
+}
+
+.info .gimp p{
+    width: 31vw;
+    font-size: 1.1vw;
+    position: relative;
+    line-height: 1.4vw;
+    top: 0vw;
+    left: 1vw;
+    color:rgb(147, 147, 147)
+}
+.info .gimp img{
+    position: absolute;
+    top: 1vw;
+    left: 33.5vw;
+    width: 23vw;
+    height: 12vw;
+}
+
+.whatyouget {
+    position: relative;
+    left: 0vw;
+}
+
+.whatyouget h1{
+    font-weight: 100;
+    position: relative;
+    text-align: center;
+    left: 0vw;
+    font-size: 3.5vw;
+    color: rgb(147, 147, 147);
+    line-height: 3.75vw;
+}
+
+.whatyouget p{
+    position: relative;
+    font-size: 1.5vw;
+    left: 1vw;
+}
+
+.whatyouget li{
+    list-style-type: square;
+    position: relative;
+    width: 46vw;
+    left: 0vw;
+    color: white;
+    font-size: 1.3vw;
+    font-weight: 100;
+    line-height: 2vw;
+    word-spacing: 0.1vw;
+}
+.whatyouget .line{
+    position: absolute;
+    width: 0.25vw;
+    height: 35vw;
+    background-color: orange;
+    top: 14vw;
+    left: 49.925vw;
+}
+
+.whatyouget .right{
+    position: absolute;
+    left: 52vw;
+    top: 12.5vw;
+}
+
+.whatyouget .right p{
+    position: relative;
+    font-size: 1.5vw;
+    left: 1vw;
+}
+
+.whatyouget .right li{
+    list-style-type: square;
+    position: relative;
+    width: 43vw;
+    left: 0vw;
+    color: white;
+    font-size: 1.3vw;
+    font-weight: 100;
+    line-height: 2vw;
+    word-spacing: 0.1vw;
+}
+
+.requirements{
+    position: relative;
+    height: 21.5vw;
+}
+.requirements .line{
+    width: 98vw;
+    height: 0.20vw;
+    background-color: white;
+}
+
+.requirements h1{
+    position: absolute;
+    left: 15vw;
+    top: 8vw;
+    font-weight: 100;
+    font-size: 3vw;
+    color: purple;
+}
+
+.requirements ul{
+    position: absolute;
+    top: 1vw;
+    left: 51vw;
+    font-weight: 100;
+    font-size: 1.5vw;
+    line-height: 2vw;
+}

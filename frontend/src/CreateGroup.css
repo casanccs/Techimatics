@@ -1,0 +1,47 @@
+.CreateGroup{
+    position: relative;
+    display: grid;
+    width: 1000px;
+    grid-template-columns: 500px 500px;
+    top: 50vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+    align-items: center;
+}
+
+.CreateGroup *{
+    color: white;
+    font-size: 35px;
+    margin-bottom: 10px;
+}
+
+.CreateGroup input{
+    background-color: rgba(255, 255, 255, 0.39);
+    font-family: 'Gamer';
+    font-weight: lighter;
+}
+
+.CreateGroup .time{
+    display: flex;
+}
+
+.CreateGroup .time input{
+    display: flex;
+    width: 230.5px;
+}
+
+.CreateGroup .button{
+    margin-top: 10px;
+}
+
+.GroupDetail{
+    position: relative;
+    margin-top: 200px;
+}
+
+.GroupDetail #delete{
+    position: relative;
+    display: block;
+    left: 50%;
+    transform: translate(-50%);
+}
