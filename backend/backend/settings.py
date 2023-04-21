@@ -128,3 +128,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True #What is this
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': {
+        'rest_framework.permissions.IsAuthenticated',
+    },
+    'DEFAULT_AUTHENTICATION_CLASSESS': {
+        'rest_framework.authentication.SessionAuthentication',
+    }
+}

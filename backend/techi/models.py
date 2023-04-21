@@ -1,9 +1,10 @@
 from django.db import models
+from django.contrib.auth.models import User
 # Create your models here.
 
 
 class Profile(models.Model):
-    user = models.OneToOneField('auth.User', on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     pType = models.CharField(max_length=30) #Will be either "Customer" or "Staff"
     #pPic
     def __str__(self):
