@@ -18,18 +18,17 @@ function App() {
   console.log(getCookie("csrftoken"))
   useEffect(() => {
     fetch('/api/profile/', {
-      credentials: 'include',
       method: "GET",
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
         'X-CSRFToken': getCookie("csrftoken")
-      },
-      body: {}
-    }).then(function(e){
+      }
+    }).then(function(response){
+      console.log(response.status)
+      if (response.status === 403) throw new Error('403 is bad!')
+      console.log('Core user set true')
       setCurrentUser(true)
-    })
-    .catch(function(error){
+    }).catch(function(error){
+      console.log('Core user set false')
       setCurrentUser(false)
     })
   }, [])

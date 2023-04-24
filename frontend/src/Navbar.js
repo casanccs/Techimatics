@@ -2,27 +2,24 @@ import './Navbar.css'
 import logo from './assets/Logo3.png'
 import React, { useState, useEffect } from 'react'
 
-let data;
 export default function Navbar(props){
-
-    let [status, setStatus] = useState([])
 
 
     async function logout(e){
         e.preventDefault()
         console.log("Fetching")
-        await fetch('/api/logout/', {
+        let response = await fetch('/api/logout/', {
             method: "POST",
             headers: {
-                'Content-Type': 'application/json'
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie("csrftoken")
             },
-            body: {
-                "withCredentials": true
-            }
         }).then(function(){
             props.onSubmit2()
             console.log("On submit 2")
         })
+        console.log(response)
     }
 
     if (props.stat){ //logged in
@@ -79,3 +76,20 @@ function makeGreen(id){
         console.log("It failed")
     }
 }
+
+
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+  }

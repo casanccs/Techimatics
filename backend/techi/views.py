@@ -93,13 +93,14 @@ class ProfileLogin(APIView):
         
 class ProfileLogout(APIView):
     permission_classes = (permissions.AllowAny,)
+    authentication_classes = [SessionAuthentication,]
     def post(self,request):
         logout(request)
         return Response(status=status.HTTP_200_OK)
 
 class ProfileView(APIView):
-    permission_classes = (permissions.IsAuthenticated,)
-    authentication_classes = (SessionAuthentication,)
+    authentication_classes = [SessionAuthentication,]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
         profile = Profile.objects.get(user=request.user)
