@@ -38,3 +38,9 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = '__all__'
+
+class RequestSerializer(serializers.ModelSerializer):
+    group = serializers.StringRelatedField(many=False)
+    class Meta:
+        model = Request
+        fields = ['group']

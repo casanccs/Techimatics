@@ -2,27 +2,38 @@ import './CreateGroup.css'
 import React, { useState, useEffect } from 'react'
 import { useParams } from "react-router-dom";
 
-export default function CreateGroup(params) {
+export default function CreateGroup({profile}) {
 
     let groupId = useParams()['groupId']; 
-    let group = {};
+    let [group, setGroup] = useState()
     let content;
+    console.log("Profile: ", profile)
+    if (!profile){
+        window.location.replace('/groups/')
+    }
 
     let createGroup = async () => {
         console.log(group);
         let response = await fetch('/api/group/', {
             method: "POST",
             headers: {
-                'Content-Type': 'application/json'
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie("csrftoken")
             },
             body: JSON.stringify(group)
         })
         console.log(response)
     }
 
-    let deleteGroup = async () => {
+    let deleteGroup = async () => { //Note, need to redirect
         await fetch(`/api/group/${group.id}`, {
             method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie("csrftoken")
+            },
         })
         console.log(group)
     }
@@ -45,13 +56,22 @@ export default function CreateGroup(params) {
     let getGroup = async () => {
         if (groupId === 'new') return
         let response = await fetch(`/api/group/${groupId}`)
+        if (response.status === 500){
+            console.log(response.status)
+            window.location.replace('/groups/')
+        }
         let data = await response.json()
-        group = data
+        setGroup(data)
     }
     useEffect(() => {
         getGroup()
     },[groupId])
-   
+    if (profile && group){
+        if (group['owner'] != profile['profile']['user']){
+            console.log("Not your group!")
+            window.location.replace('/groups/')
+        }
+    }
     if (groupId == 'new'){
         return (
             <div className="CreateGroup">
@@ -72,3 +92,19 @@ export default function CreateGroup(params) {
     }
 
 }
+
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+  }

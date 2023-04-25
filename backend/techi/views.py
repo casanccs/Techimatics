@@ -19,12 +19,21 @@ def CheckStatus(request):
     if request.method == "GET":
         return JsonResponse({'loggedIn': request.user.is_authenticated})
  
-@api_view(['GET'])
-def GroupList(request):
-    if request.method == "GET":
+
+class GroupList(APIView):
+    permission_classes = (permissions.AllowAny,)
+    authentication_classes = [SessionAuthentication,]
+
+    def get(self,request):
         groups = Group.objects.all()
         serializer = GroupSerializer(groups, many=True)
-        return JsonResponse(serializer.data, safe=False)
+        if request.user.is_authenticated:
+            profile = Profile.objects.get(user=request.user)
+            if profile.pType == "Customer":
+                reqs = Request.objects.filter(profile=profile)
+                serialiazer2 = RequestSerializer(reqs, many=True)
+                return Response({'groups': serializer.data, 'requests': serialiazer2.data}, status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     
 #@api_view(['GET','POST']) #This causes an error
 @csrf_exempt
@@ -43,30 +52,25 @@ def CreateGroup(request):
                                      level=data['level'], day=data['day'])
         serializer = GroupSerializer(group, many=False)
         return HttpResponse(status=201)
-        
-        '''
-        serializer = GroupSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        print("Baddy bad bad")
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        '''
+    
+class GroupDetail(APIView):
+    authentication_classes = [SessionAuthentication,]
+    permission_classes = [permissions.IsAuthenticated]
 
-def GroupDetail(request, id):
-    print(request.method)
-    if request.method == "GET":
+    def get(self, request, id):
         group = Group.objects.get(id=id)
         serializer = GroupSerializer(group, many=False)
         return JsonResponse(serializer.data, safe=False)
     
-    if request.method == "DELETE":
+    def delete(self, request, id):
         group = Group.objects.get(id=id)
         group.delete()
         return HttpResponse(status=201)
+
     
 class ProfileRegister(APIView):
     permission_classes = (permissions.AllowAny,)
+    authentication_classes = (SessionAuthentication,)
     def post(self, request):
         clean_data = request.data
         serializer = ProfileRegistrationSerializer(data=clean_data)
@@ -105,4 +109,19 @@ class ProfileView(APIView):
     def get(self, request):
         profile = Profile.objects.get(user=request.user)
         serializer = ProfileSerializer(profile)
+        print({'profile': serializer.data})
         return Response({'profile': serializer.data}, status=status.HTTP_200_OK)
+
+#Need to ensure only "Customers" can use this view
+class GroupRequest(APIView):
+    authentication_classes = [SessionAuthentication,]
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, id):
+        profile = Profile.objects.get(user=request.user)
+        if (profile.pType != "Customer"):
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        group = Group.objects.get(id=id)
+        req = Request(profile=profile, group=group)
+        req.save()
+        return Response(status=status.HTTP_201_CREATED)

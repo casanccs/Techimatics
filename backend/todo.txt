@@ -1,0 +1,8 @@
+1. Assign "Staff" and to make sure only they can create a group.
+2. When you are a "Customer", they can click on any group to request access to the group. Upon request, the group
+    will turn blue. When you are in the group, it is green Click again to unrequest.
+        When belonging to a group, you can leave it.
+3. When you are the owner of the group, you can view list of people who are requesting access. You can also kick 
+    out people.
+4. Chatting.
+5. Done.

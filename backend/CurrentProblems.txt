@@ -2,3 +2,10 @@
     (fixed using the StringRelatedField in models.py) (done)
 2. When using @api_view, the POST is "Forbidden", because of CSRF since we are posting without authentication
 3. Let people join a group, making sure to increment group.num
+4. Need to redirect back to groupList upon deleting group, and upon creating group
+5. Enable login from pressing enter, and redirect home upon successful login, and redirect back to login on failure.
+6. Delete group ONLY if you are the one who created the group.
+7. Can access group detail ONLY if you are in the group.
+    - If url is "group/x" and the owner of that group is not you OR is invalid, then redirect back to group list
+8. Redirects are not immediate
+9. User not found on incorrect login

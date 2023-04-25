@@ -15,6 +15,7 @@ var navcur = "home";
 function App() {
 
   const [currentUser, setCurrentUser] = useState()
+  const [profile, setProfile] = useState()
   console.log(getCookie("csrftoken"))
   useEffect(() => {
     fetch('/api/profile/', {
@@ -27,6 +28,9 @@ function App() {
       if (response.status === 403) throw new Error('403 is bad!')
       console.log('Core user set true')
       setCurrentUser(true)
+      return response.json()
+    }).then((data) => {
+      setProfile(data)
     }).catch(function(error){
       console.log('Core user set false')
       setCurrentUser(false)
@@ -34,6 +38,7 @@ function App() {
   }, [])
 
   if (currentUser){
+    console.log("Profile from app: ", profile)
     return (
       <div className="App">
         <header className="App-header">
@@ -42,8 +47,8 @@ function App() {
           <Routes>
             <Route path="/" exact element={<Home/>}/>
             <Route path="/contactUs" element={<ContactUs/>}/>
-            <Route path="/groups" element={<GroupList/>} />
-            <Route path="/group/:groupId" element={<CreateGroup/>} />
+            <Route path="/groups" element={<GroupList profile={profile}/>}/>
+            <Route path="/group/:groupId" element={<CreateGroup profile={profile}/>} />
           </Routes>
         </header>
       </div>
@@ -58,7 +63,7 @@ function App() {
           <Route path="/contactUs" element={<ContactUs/>}/>
           <Route path="/login" element={<Login onSubmit={() => setCurrentUser(true)} />} />
           <Route path="/createProfile" element={<CreateProfile onSubmit={() => setCurrentUser(true)}/>} />
-          <Route path="/groups" element={<GroupList/>} />
+          <Route path="/groups" element={<GroupList profile={profile} />}/>
         </Routes>
     </div>
   ) 

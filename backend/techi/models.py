@@ -20,10 +20,13 @@ class Group(models.Model):
     num = models.IntegerField(default=0)
 
     def __str__(self):
-        return f'{self.owner.user.username}: {self.day}'
+        return f'{self.id}'
 
 class Attendee(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
     dateJoined = models.DateField(auto_now_add=True)
 
+class Request(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)

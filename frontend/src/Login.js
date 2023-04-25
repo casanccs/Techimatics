@@ -29,7 +29,7 @@ export default function Login({onSubmit}){
             <input type="password" className='password' />
             <div></div>
             <br/><br/><br/>
-            <a href="/CreateProfile">Create a Profile</a>
+            <a href="/createProfile">Create a Profile</a>
             <input type="button" value="login" onClick={submit}/>
         </div>
     )
