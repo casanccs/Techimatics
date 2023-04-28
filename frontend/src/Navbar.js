@@ -1,9 +1,10 @@
 import './Navbar.css'
 import logo from './assets/Logo3.png'
 import React, { useState, useEffect } from 'react'
+import {Link} from 'react-router-dom'
 
-export default function Navbar(props){
-
+export default function Navbar(props, {profile}){
+    console.log("In navbar:",profile)
 
     async function logout(e){
         e.preventDefault()
@@ -20,8 +21,10 @@ export default function Navbar(props){
             console.log("On submit 2")
         })
         console.log(response)
+        window.location.replace('/login')
     }
 
+    
     if (props.stat){ //logged in
         return(
             <div className="Navbar">
@@ -34,13 +37,15 @@ export default function Navbar(props){
                 <a href="http://google.com"> <h2 id="htgs">How To Get Started</h2> </a>
                 <a href="/contactUs"> <h2 id="contact">Contact Us</h2> </a>
                 <a href="/groups"> <h2 id="groups">Group List</h2> </a>
+                <a href="/account"><h2 id="account">Account</h2></a>
     
     
-                <a href="/login"><h2 id='topright' onClick={logout}>Logout</h2></a>
+                <Link to={'/login'}><h2 id='topright' onClick={logout}>Logout</h2></Link>
     
                 <div className="one"></div>
                 <div className="two"></div>
                 <div className="three"></div>
+                <div className="four"></div>
                 {setTimeout(() => makeGreen(props.cur), 70)}
             </div>
         )

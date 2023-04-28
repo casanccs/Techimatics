@@ -8,8 +8,10 @@ import Login from './Login'
 import CreateProfile from './CreateProfile'
 import GroupList from './GroupList'
 import CreateGroup from './CreateGroup'
+import Account from './Account'
 import {useState, useEffect} from 'react'
 import CSRFToken from './csrftoken';
+import Success from './Success'
 
 var navcur = "home";
 function App() {
@@ -43,12 +45,14 @@ function App() {
       <div className="App">
         <header className="App-header">
           <CSRFToken />
-          <Navbar cur = {navcur} stat = {currentUser} onSubmit2={() => setCurrentUser(false)}/>
+          <Navbar cur = {navcur} stat = {currentUser} profile={profile} onSubmit2={() => setCurrentUser(false)}/>
           <Routes>
             <Route path="/" exact element={<Home/>}/>
             <Route path="/contactUs" element={<ContactUs/>}/>
             <Route path="/groups" element={<GroupList profile={profile}/>}/>
             <Route path="/group/:groupId" element={<CreateGroup profile={profile}/>} />
+            <Route path="/account" element={<Account profile={profile} />}/>
+            <Route path="/success" />
           </Routes>
         </header>
       </div>
@@ -57,13 +61,15 @@ function App() {
   return (
     <div className="App">
       <CSRFToken />
-      <Navbar cur = {navcur} stat = {currentUser}/>
+      <Navbar cur = {navcur} stat = {currentUser} profile={profile}/>
         <Routes>
           <Route path="/" exact element={<Home/>}/>
           <Route path="/contactUs" element={<ContactUs/>}/>
           <Route path="/login" element={<Login onSubmit={() => setCurrentUser(true)} />} />
           <Route path="/createProfile" element={<CreateProfile onSubmit={() => setCurrentUser(true)}/>} />
           <Route path="/groups" element={<GroupList profile={profile} />}/>
+          <Route path="/account" element={<Account profile={profile} />}/>
+          <Route path="/success" />
         </Routes>
     </div>
   ) 

@@ -43,4 +43,22 @@ class RequestSerializer(serializers.ModelSerializer):
     group = serializers.StringRelatedField(many=False)
     class Meta:
         model = Request
-        fields = ['group']
+        fields = ['group', 'status']
+
+class RequestSerializer2(serializers.ModelSerializer):
+    profile = serializers.StringRelatedField(many=False)
+    class Meta:
+        model = Request
+        fields = ['profile', 'status']
+
+class AttendeeSerializer(serializers.ModelSerializer):
+    profile = serializers.StringRelatedField(many=False)
+    class Meta:
+        model = Attendee
+        fields = ['profile']
+
+class MessageSerializer(serializers.ModelSerializer):
+    profile = serializers.StringRelatedField(many=False)
+    class Meta:
+        model = Message
+        fields = ['profile', 'msg']

@@ -33,6 +33,8 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'techi',
     'rest_framework',
+    'rest_framework.authtoken',
+    'dj_rest_auth',
     'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -40,6 +42,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
 
 MIDDLEWARE = [
@@ -103,6 +110,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
@@ -136,5 +149,23 @@ REST_FRAMEWORK = {
     },
     'DEFAULT_AUTHENTICATION_CLASSES': {
         'rest_framework.authentication.SessionAuthentication',
+    }
+}
+
+STRIPE_SECRET_KEY = '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'
+STRIPE_PUBLISHABLE_KEY = 'pk_live_51N1DGsJATRMkSFUkwLZtoykpSNfhesfl3n07uQvcUlxBslJ76ieZ7QlhMUN71qfWfDqXBcYsc2vFMxNd37I2pPVx002D4dommM'
+
+SITE_ID = 1
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+        'OAUTH_PKCE_ENABLED': True,
     }
 }

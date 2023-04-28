@@ -1,0 +1,7 @@
+.ListItem *{
+    pointer-events: none;
+}
+
+.ListItem{
+    cursor: pointer;
+}

@@ -35,6 +35,7 @@ export default function CreateProfile({onSubmit}){
                 })
             }).then(function(res){
                 onSubmit()
+                window.location.replace('/groups')
             })
         }
         )

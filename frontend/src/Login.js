@@ -1,10 +1,13 @@
 import './Login.css'
+import { useParams } from 'react-router-dom';
+import GoogleLogin from 'react-google-login';
 
 export default function Login({onSubmit}){
 
     async function submit(e){
         let username = document.querySelector('.username').value
         let password = document.querySelector('.password').value
+        let history;
         await fetch('/api/login/', {
             method: "POST",
             headers: {
@@ -16,9 +19,17 @@ export default function Login({onSubmit}){
                 "username": username,
                 "password": password,
             })
-        }).then(function(res){
+        }).then(function(response){
+            if (response.status === 500) throw new Error('500 is bad!')
             onSubmit()
+            window.location.replace('/groups')
+        }).catch(function(er){
+            window.location.replace('/login')
         })
+    }
+
+    function googleResponse(response){
+        console.log(response)
     }
 
     return(
@@ -31,6 +42,13 @@ export default function Login({onSubmit}){
             <br/><br/><br/>
             <a href="/createProfile">Create a Profile</a>
             <input type="button" value="login" onClick={submit}/>
+            <GoogleLogin 
+                className='googleButton'
+                clientId="616249391986-8mp42jukuupaosm87ua0di2vmut3alc3.apps.googleusercontent.com"
+                buttonText="Login with Google"
+                onSuccess={googleResponse}
+                onFailure={googleResponse}
+            />
         </div>
     )
 }

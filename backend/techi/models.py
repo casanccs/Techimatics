@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     pType = models.CharField(max_length=30) #Will be either "Customer" or "Staff"
+    tickets = models.DecimalField(default=0, decimal_places=2, max_digits=10000)
     #pPic
     def __str__(self):
         return self.user.username
@@ -30,3 +31,10 @@ class Attendee(models.Model):
 class Request(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    status = models.CharField(max_length=50, default="Pending")
+
+class Message(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    msg = models.CharField(max_length=300, default="")
+    timeCreated = models.DateTimeField(auto_now_add=True)

@@ -6,37 +6,53 @@ import ListItem from './ListItem'
 export default function GroupList({profile}){
     console.log("Profile from top of list: ", profile)
     let [groups, setGroups] = useState([])
-    var cust
-    if (profile){
-        cust = profile['profile']['pType'] === "Customer"
-    }
-    else{
-        cust = false
-    }
+    let [requests, setRequests] = useState([])
+    let [relist, setRelist] = useState([])
+    
     useEffect(() => {
-        getGroups()
-    }, [])
-
-    let getGroups = async () => {
-        let response = await fetch('/api/groups/', {
+        fetch('/api/groups/', {
             method: 'GET',
-        })
-        let data = await response.json()
-        console.log(data)
-        console.log("Profile inside: ", profile)
-        if (profile){
-            if (cust){
-                setGroups(data['groups'])
+        }).then((response) => {
+            return response.json()
+        }).then((data) => {
+            console.log("Info",data, profile)
+            //Its possible the data is {'groups', 'requests'} but 'profile' is empty
+
+            if (profile){
+                if (profile['profile']['pType'] === "Customer"){
+                    console.log("In customer", data['groups'])
+                    setGroups(data['groups'])
+                    setRequests(data['requests'])
+                }
+                else{
+                    console.log("Staff", data)
+                    setGroups(data)
+                }
             }
             else{
-                setGroups(data)
+                if (Object.keys(data).length === 2){ //This solved the problem
+                    setGroups(data['groups'])
+                    console.log("I in 1:" ,requests)
+                    setRequests(data['requests'])
+                    console.log("I in 2:" ,requests)
+                }
+                else{
+                    setGroups(data)
+                }
             }
+        })
+    }, [])
+    
+    useEffect(() => {
+        var temp = []
+        for (var i = 0; i < requests.length; i++){
+            console.log(requests[i]['group'])
+            temp.push([requests[i]['group'], requests[i]['status']])
         }
-        else{
-            setGroups(data)
-        }
-        console.log("Groups: ", groups)
-    }
+        setRelist(temp)
+        console.log(requests, temp)
+    }, [requests])
+
     if (profile){
         if (profile['profile']['pType'] !== "Customer"){ //This happens when they are Staff
             return(
@@ -44,9 +60,10 @@ export default function GroupList({profile}){
                 <div className="GroupList">
                     <h1>Welcome to the Group List Page!</h1>
                     <Link to="/group/new">Create a Group</Link>
+                    
                     <div className="grid">
                         {groups.map((group, index) => (
-                                <ListItem key={index} group={group} className="ListItem" owner={profile} />
+                                <ListItem key={index} group={group} className="ListItem" owner={profile} requests={relist} />
                             ))}
                     </div>
                 </div>
@@ -59,7 +76,7 @@ export default function GroupList({profile}){
                     <h1>Welcome to the Group List Page!</h1>
                     <div className="grid">
                         {groups.map((group, index) => (
-                                <ListItem key={index} group={group} className="ListItem" owner={profile} />
+                                <ListItem key={index} group={group} className="ListItem" owner={profile} requests={relist} />
                             ))}
                     </div>
                 </div>
@@ -71,7 +88,7 @@ export default function GroupList({profile}){
                 <h1>Welcome to the Group List Page!</h1>
                 <div className="grid">
                     {groups.map((group, index) => (
-                            <ListItem key={index} group={group} className="ListItem" owner={profile} />
+                            <ListItem key={index} group={group} className="ListItem" owner={profile} requests={relist} />
                         ))}
                 </div>
         </div>

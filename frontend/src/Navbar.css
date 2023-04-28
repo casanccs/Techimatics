@@ -65,7 +65,11 @@
     left: 64.8vw;
 }
 
-.Navbar .one,.two,.three{
+#account{
+    left: 77vw;
+}
+
+.Navbar .one,.two,.three,.four{
     position: absolute;
     width: 0.1vw;
     height: 1.3vw;
@@ -83,11 +87,14 @@
 .Navbar .three{
     left: 62.5vw;
 }
+.Navbar .four{
+    left: 74.75vw;
+}
 
 .Navbar #topright{
     color: white;
     font-weight:lighter;
     width: fit-content;
     left: 100vw;
-    transform: translate(-105%);
+    transform: translate(-130%);
 }

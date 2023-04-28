@@ -6,11 +6,11 @@ export default function CreateGroup({profile}) {
 
     let groupId = useParams()['groupId']; 
     let [group, setGroup] = useState()
+    let [requests, setRequests] = useState([])
+    let [attendees, setAttendees] = useState([])
+    let [messages, setMessages] = useState([])
     let content;
     console.log("Profile: ", profile)
-    if (!profile){
-        window.location.replace('/groups/')
-    }
 
     let createGroup = async () => {
         console.log(group);
@@ -35,7 +35,6 @@ export default function CreateGroup({profile}) {
                 'X-CSRFToken': getCookie("csrftoken")
             },
         })
-        console.log(group)
     }
 
     let handleSubmit = () => {
@@ -51,25 +50,131 @@ export default function CreateGroup({profile}) {
             createGroup()
         }
     }
+    async function reject(e){
+        e.currentTarget.parentNode.style.display = "none"
+        //Get the username of the person who I rejected
+        let name = e.currentTarget.parentNode.children[0].innerText
+        console.log(name)
+        let response = fetch(`/api/requestStatus/${name}/${groupId}`,{
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie("csrftoken")
+            },
+            body: JSON.stringify({
+                'status': "Rejected"
+            })
+        })
+        window.location.replace(`/group/${groupId}`)
+    }
+    async function accept(e){
+        e.currentTarget.parentNode.style.display = "none"
+        //Get the username of the person who I rejected
+        let name = e.currentTarget.parentNode.children[0].innerText
+        console.log(name)
+        let response = fetch(`/api/requestStatus/${name}/${groupId}`,{
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie("csrftoken")
+            },
+            body: JSON.stringify({
+                'status': "Accepted"
+            })
+        })
+        window.location.replace(`/group/${groupId}`)
+    }
 
+    async function del(e){
+        e.currentTarget.parentNode.style.display = "none"
+        let name = e.currentTarget.parentNode.children[0].innerText
+        await fetch(`/api/deleteAttendee/${name}/${groupId}`,{
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie("csrftoken")
+            },
+        })
+    }
+
+    async function del2(e){
+        let name = profile['profile']['user']
+        await fetch(`/api/deleteAttendee/${name}/${groupId}`,{
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie("csrftoken")
+            },
+        })
+        window.location.replace('/groups')
+    }
+
+    async function makeNote(){
+        let input = document.querySelector('#box')
+        let response = await fetch(`/api/makeMessage/`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie("csrftoken")
+            },
+            body: JSON.stringify({
+                "username": profile['profile']['user'],
+                "gid": groupId,
+                "msg": input.value,
+            })
+        })
+        window.location.replace(`/group/${groupId}`)
+    }
+    async function deleteMessages(){
+        let response = await fetch('/api/deleteMessages/', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie("csrftoken")
+            },
+            body: JSON.stringify({
+                "gid": groupId,
+            })
+        })
+        window.location.replace(`/group/${groupId}`)
+    }
 
     let getGroup = async () => {
         if (groupId === 'new') return
         let response = await fetch(`/api/group/${groupId}`)
         if (response.status === 500){
             console.log(response.status)
-            window.location.replace('/groups/')
+            //window.location.replace('/groups/')
         }
         let data = await response.json()
-        setGroup(data)
+        console.log("Data:", data)
+        setGroup(data['group'])
+        setAttendees(data['attendees'])
+        if (profile && profile['profile']['pType'] === "Staff"){
+            setRequests(data['requests'])
+        }
+        response = await fetch(`/api/messages/${groupId}`)
+        data = await response.json() //data: [{'profile': username, 'msg': message}, .... ]
+        setMessages(data)
     }
     useEffect(() => {
         getGroup()
-    },[groupId])
+    },[profile])
+    useEffect(() => {
+        console.log(requests)
+        console.log(group)
+    }, [requests])
+
     if (profile && group){
         if (group['owner'] != profile['profile']['user']){
             console.log("Not your group!")
-            window.location.replace('/groups/')
+            //window.location.replace('/groups/')
         }
     }
     if (groupId == 'new'){
@@ -83,12 +188,75 @@ export default function CreateGroup({profile}) {
             </div>   
         )
     }
-    else{
-        return (
-            <div className="GroupDetail">
-                <input id="delete" type='button' value="Delete Group" onClick={deleteGroup} />
-            </div>
-        )
+    else{ //This is where all the info will be put
+        //Must include current requests to click them to accept into the group
+        console.log("Reqs: ", requests)
+        let cur = 
+        <div className="GroupDetail">
+            {profile && profile['profile']['pType'] === "Staff" ? (
+                <div>
+                    <input className="delete" type='button' value="Delete Group" onClick={deleteGroup} />
+                    <h3>Requests: </h3>
+                    
+                    <div className="requests">
+                        {requests.map((request, index) => {
+                            if (request.status == "Pending"){
+                            return <div key={index} className="request">
+                                <p request={request}>{request.profile}</p>
+                                <input className="accept" type="button" value="Accept" onClick={accept}/>
+                                <input className="reject" type="button" value="Reject" onClick={reject}/>
+                            </div>
+                            }
+                        })}
+                    </div>
+
+                </div>
+            ) : (
+                <div>
+                    <input className="delete" type='button' value="Leave Group" onClick={del2} />
+                </div>
+            )}
+            <h3>Attendees: </h3>
+            
+                {profile && profile['profile']['pType'] === "Staff" ? (
+                    <div className="attendees">
+                        {attendees.map((at, index) => {
+                            return <div key={index} className="at">
+                                        <p>{at.profile}</p>
+                                        <input type="button" value="Delete Person" onClick={del} />
+                                    </div>
+                        })}
+                    </div> 
+                ) : (
+                    <div className="attendees">
+                        {attendees.map((at, index) => {
+                            return <div key={index} className="at">
+                                        <p>{at.profile}</p>
+                                    </div>
+                        })}
+                    </div> 
+                )}
+            <br></br>
+            <label>Send Message</label>
+            <input id="box" type="text" />
+            <input  type="button" value="Submit" onClick={makeNote}/>
+            <br></br>
+            {profile && profile['profile']['pType'] === "Staff" ? (
+                <input id="dMessages" type="button" value="Delete All Messages" onClick={deleteMessages}/>
+            ) : (
+                <p></p>
+            )}
+            <h3>Messages: *Refresh Page To See New Messages* </h3>
+            {messages.map((msg, index) => (
+                <div key={index} className="msg">
+                    <p>{msg.profile}: {msg.msg}</p>
+                </div>
+            ))}
+        </div>
+            
+            return (
+                cur
+                )
     }
 
 }

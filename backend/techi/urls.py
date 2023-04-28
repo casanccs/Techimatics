@@ -12,4 +12,11 @@ urlpatterns = [
     path('logout/', ProfileLogout.as_view()),
     path('profile/', ProfileView.as_view()),
     path('request/<str:id>', GroupRequest.as_view()),
+    path('requestStatus/<str:name>/<str:gid>', RequestStatus.as_view()),
+    path('deleteAttendee/<str:name>/<str:gid>', DeleteAttendee.as_view()),
+    path('makeMessage/', CreateMessage.as_view()),
+    path('messages/<str:gid>', GetMessages.as_view()),
+    path('deleteMessages/', DeleteMessages.as_view()),
+    path('charge/', Charge.as_view()),
+    path('googleAuth/', GoogleLogin.as_view())
 ]
