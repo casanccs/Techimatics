@@ -36,7 +36,8 @@
 
 .GroupDetail{
     position: relative;
-    margin-top: 200px;
+    margin-top: 100px;
+    display: flex;
 }
 
 .GroupDetail .delete{
@@ -60,6 +61,7 @@
 .GroupDetail *{
     color: white;
     font-weight: 100;
+    font-size: 20px;
 }
 
 .GroupDetail input{
@@ -74,4 +76,45 @@
 
 #dMessages{
     margin-top: 25px;
+}
+
+.GroupDetail .right{
+    flex: 1;
+    margin-left: 200px;
+}
+
+.chat{
+    background-color: rgb(16, 16, 52);
+    height: calc(100vh - 300px);
+    overflow-y: auto;
+    display:flex;
+    flex-direction: column-reverse;
+}
+
+#box{
+    font-size: 20px;
+    border-radius: 10px;
+    background-color: rgba(128, 128, 128, 0.296);
+    color: white;
+    font-family: 'Gamer';
+}
+
+.GroupDetail input[type="button"]{
+    color: white;
+    border-radius: 10px;
+    padding: 8px;
+    background-color: rgb(74, 74, 74);
+    font-family: 'Gamer';
+}
+
+.name{
+    color: rgb(86, 86, 86);
+}
+
+.own{
+    text-align: center;
+}
+
+.msg{
+    margin-bottom: 20px;
 }

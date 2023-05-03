@@ -145,6 +145,12 @@ export default function CreateGroup({profile}) {
         window.location.replace(`/group/${groupId}`)
     }
 
+    function submitKey(e){
+        if (e.keyCode == 13){
+            makeNote()
+        }
+    }
+
     let getGroup = async () => {
         if (groupId === 'new') return
         let response = await fetch(`/api/group/${groupId}`)
@@ -193,65 +199,79 @@ export default function CreateGroup({profile}) {
         console.log("Reqs: ", requests)
         let cur = 
         <div className="GroupDetail">
-            {profile && profile['profile']['pType'] === "Staff" ? (
-                <div>
-                    <input className="delete" type='button' value="Delete Group" onClick={deleteGroup} />
-                    <h3>Requests: </h3>
-                    
-                    <div className="requests">
-                        {requests.map((request, index) => {
-                            if (request.status == "Pending"){
-                            return <div key={index} className="request">
-                                <p request={request}>{request.profile}</p>
-                                <input className="accept" type="button" value="Accept" onClick={accept}/>
-                                <input className="reject" type="button" value="Reject" onClick={reject}/>
-                            </div>
-                            }
-                        })}
-                    </div>
-
-                </div>
-            ) : (
-                <div>
-                    <input className="delete" type='button' value="Leave Group" onClick={del2} />
-                </div>
-            )}
-            <h3>Attendees: </h3>
-            
+            <div className='left'>
+                <h3 className='own'>Owner: {group ? (group.owner): ("")}</h3>
                 {profile && profile['profile']['pType'] === "Staff" ? (
-                    <div className="attendees">
-                        {attendees.map((at, index) => {
-                            return <div key={index} className="at">
-                                        <p>{at.profile}</p>
-                                        <input type="button" value="Delete Person" onClick={del} />
+                    
+                    <div>
+                        <input className="delete" type='button' value="Delete Group" onClick={deleteGroup} />
+                        <h3>Requests: </h3>
+                        
+                        <div className="requests">
+                            {empty(requests) ? (
+                                requests.map((request, index) => {
+                                    if (request.status == "Pending"){
+                                    return <div key={index} className="request">
+                                        <p request={request}>{request.profile}</p>
+                                        <input className="accept" type="button" value="Accept" onClick={accept}/>
+                                        <input className="reject" type="button" value="Reject" onClick={reject}/>
                                     </div>
-                        })}
-                    </div> 
+                                    }
+                                })
+                            ):(
+                                <p>*No New Requests*</p>
+                            )}
+                        </div>
+
+                    </div>
                 ) : (
-                    <div className="attendees">
-                        {attendees.map((at, index) => {
-                            return <div key={index} className="at">
-                                        <p>{at.profile}</p>
-                                    </div>
-                        })}
-                    </div> 
+                    <div>
+                        <input className="delete" type='button' value="Leave Group" onClick={del2} />
+                    </div>
                 )}
-            <br></br>
-            <label>Send Message</label>
-            <input id="box" type="text" />
-            <input  type="button" value="Submit" onClick={makeNote}/>
-            <br></br>
-            {profile && profile['profile']['pType'] === "Staff" ? (
-                <input id="dMessages" type="button" value="Delete All Messages" onClick={deleteMessages}/>
-            ) : (
-                <p></p>
-            )}
-            <h3>Messages: *Refresh Page To See New Messages* </h3>
-            {messages.map((msg, index) => (
-                <div key={index} className="msg">
-                    <p>{msg.profile}: {msg.msg}</p>
+                
+                <h3>Attendees: </h3>
+                
+                    {profile && profile['profile']['pType'] === "Staff" ? (
+                        <div className="attendees">
+                            {attendees.length != 0 ? (attendees.map((at, index) => {
+                                return <div key={index} className="at">
+                                            <p>{at.profile}</p>
+                                            <input type="button" value="Delete Person" onClick={del} />
+                                        </div>
+                            })) : (
+                                <p>*No Attendees*</p>
+                            )}
+                        </div> 
+                    ) : (
+                        <div className="attendees">
+                            {attendees.length != 0 ? (attendees.map((at, index) => {
+                                return <div key={index} className="at">
+                                            <p>{at.profile}</p>
+                                        </div>
+                            })) : (
+                                <p>*No Attendees*</p>
+                            )}
+                        </div> 
+                    )}
+            </div>
+            <div className='right'>
+                <div className='chat'>
+                {messages.map((msg, index) => (
+                    <div key={index} className="msg">
+                        <span className='name'>{msg.profile}</span>: {msg.msg}
+                    </div>
+                ))}
                 </div>
-            ))}
+                <input id="box" type="text" placeholder='Type Message...' onKeyDown={submitKey} autoFocus/>
+                <input  type="button" value="Submit" onClick={makeNote} />
+                {profile && profile['profile']['pType'] === "Staff" ? (
+                    <input id="dMessages" type="button" value="Delete All Messages" onClick={deleteMessages}/>
+                ) : (
+                    <p></p>
+                )}
+                <h3>*Refresh Page To See New Messages* </h3>
+            </div>
         </div>
             
             return (
@@ -276,3 +296,14 @@ function getCookie(name) {
     }
     return cookieValue;
   }
+
+function empty(requests){
+    var emp = false;
+    for (var i = 0; i < requests.length; i++){
+        if (requests[i].status == "Pending"){
+            emp = true;
+            break;
+        }
+    }
+    return emp
+}
