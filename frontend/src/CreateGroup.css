@@ -47,6 +47,11 @@
     transform: translate(-50%);
 }
 
+.GroupDetail .delete:hover, .GroupDetail .charge:hover{
+    background-color: rgb(48, 48, 48);
+    cursor: pointer;
+}
+
 .request{
     margin-top: 30px;
     display: grid;
@@ -92,11 +97,13 @@
 }
 
 #box{
-    font-size: 20px;
+    font-size: 25px;
     border-radius: 10px;
     background-color: rgba(128, 128, 128, 0.296);
     color: white;
     font-family: 'Gamer';
+    margin-right: 10px;
+    height: 20px;
 }
 
 .GroupDetail input[type="button"]{
@@ -105,6 +112,10 @@
     padding: 8px;
     background-color: rgb(74, 74, 74);
     font-family: 'Gamer';
+}
+.GroupDetail input[type="button"]:hover{
+    background-color: rgb(48, 48, 48);
+    cursor: pointer;
 }
 
 .name{

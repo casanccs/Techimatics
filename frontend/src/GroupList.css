@@ -36,3 +36,22 @@
     left: 50%;
     transform: translate(-50%);
 }
+
+
+#cGroup{
+    position: relative;
+    width:fit-content;
+    display: block;
+    font-size: 30px;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+    background-color: rgba(61, 63, 88, 0.718);
+    left: 50%;
+    transform: translate(-50%);
+}
+
+#cGroup:hover{
+    background-color: rgba(87, 94, 164, 0.718);
+}

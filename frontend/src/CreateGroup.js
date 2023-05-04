@@ -244,7 +244,7 @@ export default function CreateGroup({profile}) {
                         <div className="attendees">
                             {attendees.length != 0 ? (attendees.map((at, index) => {
                                 return <div key={index} className="at">
-                                            <p>{at.profile}</p>
+                                            <p>* {at.profile}</p>
                                             <input type="button" value="Delete Person" onClick={del} />
                                         </div>
                             })) : (
@@ -255,7 +255,7 @@ export default function CreateGroup({profile}) {
                         <div className="attendees">
                             {attendees.length != 0 ? (attendees.map((at, index) => {
                                 return <div key={index} className="at">
-                                            <p>{at.profile}</p>
+                                            <p>* {at.profile}</p>
                                         </div>
                             })) : (
                                 <p>*No Attendees*</p>

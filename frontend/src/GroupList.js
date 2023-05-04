@@ -59,7 +59,7 @@ export default function GroupList({profile}){
                 //The line underneath should be seen only by Staff members
                 <div className="GroupList">
                     <h1>Welcome to the Group List Page!</h1>
-                    <Link to="/group/new">Create a Group</Link>
+                    <Link id="cGroup" to="/group/new">Create a Group</Link>
                     
                     <div className="grid">
                         {groups.map((group, index) => (
