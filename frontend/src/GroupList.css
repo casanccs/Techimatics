@@ -1,6 +1,10 @@
 .GroupList{
-    margin-top: 200px;
+    margin-top: 75px;
     color: white;
+}
+
+.GroupList h1, .GroupList h4{
+    text-align: center;
 }
 
 .GroupList *{

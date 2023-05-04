@@ -74,6 +74,10 @@ export default function GroupList({profile}){
                 //This runs if they are Customers
                 <div className="GroupList">
                     <h1>Welcome to the Group List Page!</h1>
+                    <h4>Click on a white-colored group to request to join the group!</h4>
+                    <h4><span style={{color: 'blue'}}>Blue</span> group means you requested and the owner must accept or reject. Click again to remove request.</h4>
+                    <h4><span style={{color: 'red'}}>Red</span> group means you were rejected. Click to remove request.</h4>
+                    <h4><span style={{color: 'green'}}>Green</span> group means you were accepted. Click on it to enter the group page.</h4>
                     <div className="grid">
                         {groups.map((group, index) => (
                                 <ListItem key={index} group={group} className="ListItem" owner={profile} requests={relist} />

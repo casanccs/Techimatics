@@ -37,6 +37,13 @@ export default function CreateGroup({profile}) {
         })
     }
 
+    async function ChargeGroup(e){
+        await fetch(`/api/group/${group.id}/charge`, {
+            method: 'GET'
+        })
+        e.target.style.display = "none"
+    }
+
     let handleSubmit = () => {
         group['day'] = document.querySelector('#day').value;
         group['level'] = document.querySelector('#level').value;
@@ -205,6 +212,7 @@ export default function CreateGroup({profile}) {
                     
                     <div>
                         <input className="delete" type='button' value="Delete Group" onClick={deleteGroup} />
+                        <input className="charge" type='button' value="Charge Group" onClick={ChargeGroup} />
                         <h3>Requests: </h3>
                         
                         <div className="requests">

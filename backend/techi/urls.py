@@ -6,6 +6,7 @@ urlpatterns = [
     path('checkStatus/', CheckStatus),
     path('groups/', GroupList.as_view()),
     path('group/', CreateGroup),
+    path('group/<str:id>/charge', ChargeGroup.as_view()),
     path('group/<str:id>', GroupDetail.as_view()),
     path('register/', ProfileRegister.as_view()),
     path('login/', ProfileLogin.as_view()),

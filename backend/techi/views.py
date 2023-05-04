@@ -13,6 +13,7 @@ from rest_framework import permissions, status
 from django.conf import settings
 from django.contrib.sessions.models import Session
 import stripe
+import decimal
 
 
 # Create your views here.
@@ -209,6 +210,20 @@ class DeleteMessages(APIView):
         messages = Message.objects.filter(group=group)
         messages.delete()
         return Response(status=status.HTTP_200_OK)
+    
+class ChargeGroup(APIView):
+    authentication_classes = [SessionAuthentication,]
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, id):
+        group = Group.objects.get(id=id)
+        attendees = Attendee.objects.filter(group=group)
+        for attendee in attendees:
+            attendee.profile.tickets -= 5
+            attendee.profile.save()
+            print(attendee.profile.user.username, attendee.profile.tickets)
+        
+        return Response(status=status.HTTP_200_OK)
 
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -233,6 +248,8 @@ class Charge(APIView):
             mode = 'payment',
             success_url="http://localhost:3000/account",
         )
+        global user #This is funny and super jank. I need this so I can use user in ChargeHook
+        user = request.user #ChargeHook's request doesn't have a user connected to it
         return Response({'url': session.url}, status=status.HTTP_200_OK)
     
 
@@ -264,13 +281,10 @@ def ChargeHook(request):
 
         line_items = session.line_items
         # Fulfill the purchase...Issue here is that Stripe is making the request, so request.user is nobody
-        session_key = '56fsa74lk4k7k8tbi7740dloo2uyintz' #Get this session cookie
-        session2 = Session.objects.get(session_key=session_key)
-        uid = session2.get_decoded().get('_auth_user_id')
-        user = User.objects.get(pk=uid)
         profile = Profile.objects.get(user=user)
         print(session.amount_total) #NOTE: amount.total is an integer, where 15.00 is represented as 1500
-        profile.tickets += session.amount_total*0.01
+        profile.tickets += session.amount_total*decimal.Decimal(0.01)
+
         profile.save()
 
     return HttpResponse(status=200)

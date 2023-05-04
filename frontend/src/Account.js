@@ -30,8 +30,11 @@ export default function Account({profile}){
                 data-description="Payment Gateway" data-amount={amount} data-locale="auto"
                 ></script>
                 <h1>Account: {profile['profile']['user']}</h1>
-                <h2>You have: ${profile['profile']['tickets']}</h2>
-                <br></br>$<input type='number' id="amount" value='1' min="1" /><br></br>
+                <h2>Current Balance: ${profile['profile']['tickets']}</h2>
+                <br></br>
+                <h1>Add more to your balance:</h1>
+                <span id="payment">$<input type='number' id="amount" min="1" defaultValue={1} /><br></br></span>
+                <br></br>
                 <button type="submit" id="checkout-button" onClick={checkout}>Checkout</button>
             </div>
 

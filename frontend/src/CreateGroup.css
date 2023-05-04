@@ -40,7 +40,7 @@
     display: flex;
 }
 
-.GroupDetail .delete{
+.GroupDetail .delete, .GroupDetail .charge{
     position: relative;
     display: block;
     left: 50%;
