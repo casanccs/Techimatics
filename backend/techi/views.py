@@ -11,6 +11,7 @@ from rest_framework.authentication import SessionAuthentication
 from rest_framework.views import APIView
 from rest_framework import permissions, status
 from django.conf import settings
+from django.contrib.sessions.models import Session
 import stripe
 
 
@@ -232,20 +233,44 @@ class Charge(APIView):
             mode = 'payment',
             success_url="http://localhost:3000/account",
         )
-        profile.tickets += clean_data['amount']
-        profile.save()
         return Response({'url': session.url}, status=status.HTTP_200_OK)
+    
 
 
-from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
-from allauth.socialaccount.providers.oauth2.client import OAuth2Client
-from dj_rest_auth.registration.views import SocialLoginView
-class GoogleLogin(SocialLoginView):
-    authentication_classes = [SessionAuthentication,]
-    permission_classes = [permissions.AllowAny]
-    adapter_class = GoogleOAuth2Adapter
-    client_class = OAuth2Client
+endpoint_secret = 'whsec_295b233c67cd037516740e5f29be6341689ae1507ba3c10219e70d83e16d42f6'
+@csrf_exempt
+def ChargeHook(request):
+    payload = request.body
+    sig_header = request.META['HTTP_STRIPE_SIGNATURE']
+    event = None
 
-    def get(self,request):
+    try: 
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, endpoint_secret
+        )
+    except ValueError as e:
+        return HttpResponse(status=400)
 
-        return Response(status=status.HTTP_200_OK)
+    except stripe.error.SignatureVerificationError as e:
+        # Invalid signature
+        return HttpResponse(status=400)
+    
+    if event['type'] == 'checkout.session.completed':
+        # Retrieve the session. If you require line items in the response, you may include them by expanding line_items.
+        session = stripe.checkout.Session.retrieve(
+        event['data']['object']['id'],
+        expand=['line_items'],
+        )
+
+        line_items = session.line_items
+        # Fulfill the purchase...Issue here is that Stripe is making the request, so request.user is nobody
+        session_key = '56fsa74lk4k7k8tbi7740dloo2uyintz' #Get this session cookie
+        session2 = Session.objects.get(session_key=session_key)
+        uid = session2.get_decoded().get('_auth_user_id')
+        user = User.objects.get(pk=uid)
+        profile = Profile.objects.get(user=user)
+        print(session.amount_total) #NOTE: amount.total is an integer, where 15.00 is represented as 1500
+        profile.tickets += session.amount_total*0.01
+        profile.save()
+
+    return HttpResponse(status=200)

@@ -18,5 +18,5 @@ urlpatterns = [
     path('messages/<str:gid>', GetMessages.as_view()),
     path('deleteMessages/', DeleteMessages.as_view()),
     path('charge/', Charge.as_view()),
-    path('googleAuth/', GoogleLogin.as_view())
+    path('chargeHook/', ChargeHook),
 ]

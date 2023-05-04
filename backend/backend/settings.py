@@ -145,15 +145,17 @@ CORS_ALLOW_CREDENTIALS = True #What is this
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': {
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',
     },
     'DEFAULT_AUTHENTICATION_CLASSES': {
         'rest_framework.authentication.SessionAuthentication',
     }
 }
 
-STRIPE_SECRET_KEY = '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'
-STRIPE_PUBLISHABLE_KEY = 'pk_live_51N1DGsJATRMkSFUkwLZtoykpSNfhesfl3n07uQvcUlxBslJ76ieZ7QlhMUN71qfWfDqXBcYsc2vFMxNd37I2pPVx002D4dommM'
+#STRIPE_SECRET_KEY = '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'
+#STRIPE_PUBLISHABLE_KEY = 'pk_live_51N1DGsJATRMkSFUkwLZtoykpSNfhesfl3n07uQvcUlxBslJ76ieZ7QlhMUN71qfWfDqXBcYsc2vFMxNd37I2pPVx002D4dommM'
+STRIPE_SECRET_KEY = 'sk_test_51N1DGsJATRMkSFUkj8geLbJFuAYiEZCXHZX3er4fqkot05Fup3HT640JZyVUzG8JDfmRKOQTVJvZeDU7U1LQDeVn00RFrEU0vT'
+STRIPE_PUBLISHABLE_KEY = 'pk_test_51N1DGsJATRMkSFUkHJylWd15DLlhGBzl4jQFzzdeuBjNojtY9TsQSHKrVRlSHHLz5YVSSTxDCNOb5NbrxH8TLvIl00p0HO7vhR'
 
 SITE_ID = 1
 

@@ -42,13 +42,6 @@ export default function Login({onSubmit}){
             <br/><br/><br/>
             <a href="/createProfile">Create a Profile</a>
             <input type="button" value="login" onClick={submit}/>
-            <GoogleLogin 
-                className='googleButton'
-                clientId="616249391986-8mp42jukuupaosm87ua0di2vmut3alc3.apps.googleusercontent.com"
-                buttonText="Login with Google"
-                onSuccess={googleResponse}
-                onFailure={googleResponse}
-            />
         </div>
     )
 }

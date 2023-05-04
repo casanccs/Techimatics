@@ -7,6 +7,7 @@ export default function Account({profile}){
     let amount = 0.50
 
     async function checkout(){
+        amount = Number(document.querySelector('#amount').value)
         let response = await fetch('/api/charge/', {
             method: "POST",
             headers: {
@@ -30,6 +31,7 @@ export default function Account({profile}){
                 ></script>
                 <h1>Account: {profile['profile']['user']}</h1>
                 <h2>You have: ${profile['profile']['tickets']}</h2>
+                <br></br>$<input type='number' id="amount" value='1' min="1" /><br></br>
                 <button type="submit" id="checkout-button" onClick={checkout}>Checkout</button>
             </div>
 
