@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     pType = models.CharField(max_length=30) #Will be either "Customer" or "Staff"
-    tickets = models.DecimalField(default=0, decimal_places=2, max_digits=10000)
+    tickets = models.DecimalField(default=0, decimal_places=2, max_digits=100)
     #pPic
     def __str__(self):
         return self.user.username

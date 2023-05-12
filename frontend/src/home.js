@@ -20,7 +20,7 @@ export default function home(){
                 <img src={player} id="player"/>
                 <div id="mid">
                     <h1>Hands on game development learning</h1>
-                    <h2>With a growing community!</h2>
+                    <h2>Based in Houston, Texas!</h2>
                 </div>
                 <img src={player2} id="player2"/>
                 <img src={skeleton} id="skeleton"/>
@@ -70,28 +70,30 @@ export default function home(){
                 </div>
             </div>
             <div className="whatyouget">
-                <h1>For just <br></br> <div style={{"color": "rgb(0,210,0)", "fontSize": "4vw", "marginTop": "0.5vw"}}>$10</div> an hour,you get: </h1>
+                <h1>Starting at, <br></br> <div style={{"color": "rgb(0,210,0)", "fontSize": "4vw", "marginTop": "0.5vw"}}>$15</div> an hour,you get: </h1>
                 <p>Current Features:</p>
                 <ul>
-                    <li>One class of tutoring a week that lasts for two hours.</li>
                     <li>Simple notes that summarize what they learn in the class.</li>
                     <li>List of commands that are taught and describes how they work. (Otherwise known as documentation)</li>
                     <li>Weekly optional homework to get them to code outside of home, that comes with answers and explanations to self grade and study.</li>
                     <li>Projects that students will work on, and will get help from a tutor</li>
                     <li>Communication with tutor so they can answer simple questions that students or parents may have.</li>
-                    <li>Monthly tests that will go over what the student has learned within the month with a provided answer sheet.</li>
                 </ul>
                 <div className="line"></div>
                 <div className="right">
                     <p>Future Features:</p>
                     <ul>
                         <li>Coding competitions.</li>
-                        <li>Blog where anyone can ask any coding questions, and whoever answers the question right will be rewarded "points" which can be used for prizes, applies to students and tutors.</li>
-                        <li>One on one coding duel.</li>
                         <li>Weekly showoff of projects that students make that anyone can play.</li>
                         <li>Teaching other subjects like math, circuits, and other science based disciplines.</li>
                     </ul>
                 </div>
+            </div>
+            <div className='pricing'>
+                <h2 id="first">Pricing:</h2>
+                <h3>$15 an hour for a class of 5 students</h3>
+                <h3>$18 an hour for a class of 4 students</h3>
+                <h3 id="last">$20 an hour for a class of 3 students</h3>
             </div>
             <div className="requirements">
                 <div className="line"></div>

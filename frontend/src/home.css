@@ -303,7 +303,7 @@
 .whatyouget .line{
     position: absolute;
     width: 0.25vw;
-    height: 35vw;
+    height: 25vw;
     background-color: orange;
     top: 14vw;
     left: 49.925vw;
@@ -359,4 +359,19 @@
     font-weight: 100;
     font-size: 1.5vw;
     line-height: 2vw;
+}
+
+.pricing{
+    text-align: center;
+    background-color: white;
+    color: black;
+    font-weight: 100;
+}
+
+.pricing #first{
+    padding-top: 25px;
+}
+
+.pricing #last{
+    padding-bottom: 30px;
 }

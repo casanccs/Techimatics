@@ -19,6 +19,7 @@ export default function GroupList({profile}){
             //Its possible the data is {'groups', 'requests'} but 'profile' is empty
 
             if (profile){
+                console.log("Data:" , data)
                 if (profile['profile']['pType'] === "Customer"){
                     console.log("In customer", data['groups'])
                     setGroups(data['groups'])
@@ -30,7 +31,8 @@ export default function GroupList({profile}){
                 }
             }
             else{
-                if (Object.keys(data).length === 2){ //This solved the problem
+                console.log("Data 2:" , data)
+                if (data && !Array.isArray(data)){ //Check to see if the data type is a dict or array
                     setGroups(data['groups'])
                     console.log("I in 1:" ,requests)
                     setRequests(data['requests'])
@@ -38,6 +40,7 @@ export default function GroupList({profile}){
                 }
                 else{
                     setGroups(data)
+                    console.log("Trying to set groups...")
                 }
             }
         })
@@ -52,7 +55,7 @@ export default function GroupList({profile}){
         setRelist(temp)
         console.log(requests, temp)
     }, [requests])
-
+    console.log("groups:", groups)
     if (profile){
         if (profile['profile']['pType'] !== "Customer"){ //This happens when they are Staff
             return(
@@ -62,9 +65,11 @@ export default function GroupList({profile}){
                     <Link id="cGroup" to="/group/new">Create a Group</Link>
                     
                     <div className="grid">
-                        {groups.map((group, index) => (
+                        {groups != [] ? (groups.map((group, index) => (
                                 <ListItem key={index} group={group} className="ListItem" owner={profile} requests={relist} />
-                            ))}
+                            ))): (
+                                <p></p>
+                            )}
                     </div>
                 </div>
             )
@@ -79,9 +84,11 @@ export default function GroupList({profile}){
                     <h4><span style={{color: 'red'}}>Red</span> group means you were rejected. Click to remove request.</h4>
                     <h4><span style={{color: 'green'}}>Green</span> group means you were accepted. Click on it to enter the group page.</h4>
                     <div className="grid">
-                        {groups.map((group, index) => (
+                            {groups != [] ? (groups.map((group, index) => (
                                 <ListItem key={index} group={group} className="ListItem" owner={profile} requests={relist} />
-                            ))}
+                            ))): (
+                                <p></p>
+                            )}
                     </div>
                 </div>
             )
@@ -91,9 +98,11 @@ export default function GroupList({profile}){
         <div className="GroupList">
                 <h1>Welcome to the Group List Page!</h1>
                 <div className="grid">
-                    {groups.map((group, index) => (
-                            <ListItem key={index} group={group} className="ListItem" owner={profile} requests={relist} />
-                        ))}
+                            {groups != [] ? (groups.map((group, index) => (
+                                <ListItem key={index} group={group} className="ListItem" owner={profile} requests={relist} />
+                            ))): (
+                                <p></p>
+                            )}
                 </div>
         </div>
     )

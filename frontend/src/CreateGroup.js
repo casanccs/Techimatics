@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 export default function CreateGroup({profile}) {
 
     let groupId = useParams()['groupId']; 
-    let [group, setGroup] = useState()
+    let [group, setGroup] = useState({})
     let [requests, setRequests] = useState([])
     let [attendees, setAttendees] = useState([])
     let [messages, setMessages] = useState([])
@@ -24,6 +24,7 @@ export default function CreateGroup({profile}) {
             body: JSON.stringify(group)
         })
         console.log(response)
+        window.location.replace('/groups')
     }
 
     let deleteGroup = async () => { //Note, need to redirect
@@ -35,6 +36,7 @@ export default function CreateGroup({profile}) {
                 'X-CSRFToken': getCookie("csrftoken")
             },
         })
+        window.location.replace('/groups')
     }
 
     async function ChargeGroup(e){

@@ -46,7 +46,6 @@ export default function Navbar(props, {profile}){
                 <div className="two"></div>
                 <div className="three"></div>
                 <div className="four"></div>
-                {setTimeout(() => makeGreen(props.cur), 70)}
             </div>
         )
     }
@@ -68,19 +67,10 @@ export default function Navbar(props, {profile}){
             <div className="one"></div>
             <div className="two"></div>
             <div className="three"></div>
-            {setTimeout(() => makeGreen(props.cur), 70)}
         </div>
     )
 }
 
-function makeGreen(id){
-    if (document.getElementById(id)){
-        document.getElementById(id).style.color = "rgb(0,255,0)"
-    }
-    else{
-        console.log("It failed")
-    }
-}
 
 
 function getCookie(name) {
