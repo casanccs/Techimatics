@@ -3,9 +3,16 @@ import React from 'react';
 var csrftoken = getCookie('csrftoken');
 
 const CSRFToken = () => {
-    return (
-        <input type="hidden" name="csrfmiddlewaretoken" value={csrftoken} />
-    );
+    if (csrftoken){
+        return (
+            <input type="hidden" name="csrfmiddlewaretoken" value={csrftoken} />
+        );
+    }
+    else{
+        return (
+            <div></div>
+        )
+    }
 };
 export default CSRFToken;
 

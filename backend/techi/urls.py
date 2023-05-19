@@ -8,7 +8,7 @@ urlpatterns = [
     path('group/', CreateGroup),
     path('group/<str:id>/charge', ChargeGroup.as_view()),
     path('group/<str:id>', GroupDetail.as_view()),
-    path('register/', ProfileRegister.as_view()),
+    path('register/', ProfileRegister.as_view(), name="register"),
     path('login/', ProfileLogin.as_view()),
     path('logout/', ProfileLogout.as_view()),
     path('profile/', ProfileView.as_view()),

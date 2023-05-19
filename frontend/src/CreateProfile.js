@@ -3,7 +3,7 @@ export default function CreateProfile({onSubmit}){
 
     async function submit(e){
         let username = document.querySelector('.username').value
-        let password = document.querySelector('.firstPassword').value
+        let password = document.querySelector('.password').value
         console.log({
             "username": username,
             "password": password,
@@ -44,15 +44,13 @@ export default function CreateProfile({onSubmit}){
     return(
         <div className="CreateProfile">
             <label>Username: </label>
-            <input type="text" className="username" />
+            <input type="text" className="username"/>
             <label>Password: </label>
-            <input type="password" className='firstPassword' />
-            <label>Retype Password: </label>
-            <input type="password" className='secondPassword' />
+            <input type="password" className='password'/>
             <div></div>
             <br/><br/><br/>
             <div></div>
-            <input type="button" value="Create Profile" onClick={submit} />
+            <input type="button" className='submit' value="Create Profile" onClick={submit} />
         </div>
     )
 }

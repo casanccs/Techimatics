@@ -1,13 +1,10 @@
 import './Login.css'
-import { useParams } from 'react-router-dom';
-import GoogleLogin from 'react-google-login';
 
 export default function Login({onSubmit}){
 
     async function submit(e){
         let username = document.querySelector('.username').value
         let password = document.querySelector('.password').value
-        let history;
         await fetch('/api/login/', {
             method: "POST",
             headers: {
@@ -28,10 +25,6 @@ export default function Login({onSubmit}){
         })
     }
 
-    function googleResponse(response){
-        console.log(response)
-    }
-
     return(
         <div className="Login">
             <label>Username: </label>
@@ -41,7 +34,7 @@ export default function Login({onSubmit}){
             <div></div>
             <br/><br/><br/>
             <a href="/createProfile">Create a Profile</a>
-            <input type="button" value="login" onClick={submit}/>
+            <input type="button" value="login" onClick={submit} className="submit" />
         </div>
     )
 }

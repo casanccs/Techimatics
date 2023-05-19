@@ -219,15 +219,19 @@ class ChargeGroup(APIView):
         group = Group.objects.get(id=id)
         attendees = Attendee.objects.filter(group=group)
         for attendee in attendees:
-            attendee.profile.tickets -= 5
+            if attendees.count() == 5:
+                attendee.profile.tickets -= 15
+            if attendees.count() == 4:
+                attendee.profile.tickets -= 18
+            else:
+                attendee.profile.tickets -= 20
             attendee.profile.save()
             print(attendee.profile.user.username, attendee.profile.tickets)
-        
         return Response(status=status.HTTP_200_OK)
 
 
-stripe.api_key = settings.STRIPE_SECRET_KEY
 class Charge(APIView):
+    stripe.api_key = settings.STRIPE_SECRET_KEY
     authentication_classes = [SessionAuthentication,]
     permission_classes = [permissions.IsAuthenticated]
 
@@ -254,9 +258,9 @@ class Charge(APIView):
     
 
 
-endpoint_secret = 'whsec_295b233c67cd037516740e5f29be6341689ae1507ba3c10219e70d83e16d42f6'
 @csrf_exempt
 def ChargeHook(request):
+    endpoint_secret = 'whsec_295b233c67cd037516740e5f29be6341689ae1507ba3c10219e70d83e16d42f6'
     payload = request.body
     sig_header = request.META['HTTP_STRIPE_SIGNATURE']
     event = None
